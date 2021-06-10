@@ -1,0 +1,47 @@
+apiVersion: v1
+entries:
+  bind9:
+  - apiVersion: v2
+    appVersion: "9.16"
+    created: "2021-06-10T21:45:18.809665333+02:00"
+    description: A ISC Bind9 Helm chart for Kubernetes
+    digest: 2f32c5a1adf29748cfba2be65e809716956392935c346adc3f19f48528244aad
+    name: bind9
+    type: application
+    urls:
+    - https://github.com/lotherk/helm-charts/releases/download/bind9-0.1.0/bind9-0.1.0.tgz
+    version: 0.1.0
+  fiche:
+  - apiVersion: v2
+    appVersion: 0.9.1
+    created: "2021-06-10T21:45:18.950377642+02:00"
+    description: A Fiche Helm chart for Kubernetes
+    digest: 49f3672369443f6861a15d23b2eb413b78e35ceff2ed1d1c634bf247ebc6e5e9
+    name: fiche
+    type: application
+    urls:
+    - https://github.com/lotherk/helm-charts/releases/download/fiche-0.1.0/fiche-0.1.0.tgz
+    version: 0.1.0
+  gpsd:
+  - apiVersion: v2
+    appVersion: 0.9.1
+    created: "2021-06-10T21:45:19.111606962+02:00"
+    description: A Fiche Helm chart for Kubernetes
+    digest: 511f34cada7fead406ed3a60e8cc1d18a62ffeb10724d38ad4247f24dd093e86
+    name: gpsd
+    type: application
+    urls:
+    - https://github.com/lotherk/helm-charts/releases/download/gpsd-0.1.0/gpsd-0.1.0.tgz
+    version: 0.1.0
+  rainloop:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2021-06-10T21:45:19.316255006+02:00"
+    description: A Rainloop Helm chart for Kubernetes
+    digest: ebf1a9b8e1cf94905644253224708c5d89de7aa6fd912be1068a236760e0ee3d
+    name: rainloop
+    type: application
+    urls:
+    - https://github.com/lotherk/helm-charts/releases/download/rainloop-0.1.0/rainloop-0.1.0.tgz
+    version: 0.1.0
+generated: "2021-06-10T21:45:19.316275119+02:00"
