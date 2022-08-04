@@ -1,0 +1,28 @@
+ingress:
+  enabled: true
+  annotations:
+    kubernetes.io/ingress.class: "fr01"
+    nginx.ingress.kubernetes.io/proxy-body-size: '0'
+    nginx.ingress.kubernetes.io/proxy-read-timeout: '600'
+    nginx.ingress.kubernetes.io/proxy-send-timeout: '600'
+    certmanager.k8s.io/cluster-issuer: "letsencrypt-cluster-issuer"
+    kubernetes.io/tls-acme: "true"
+    certmanager.k8s.io/acme-challenge-type: "http01"
+    #cert-manager.io/cluster-issuer: "ca-issuer"
+  hosts:
+    - mail.lother.io
+    - mail.konradlother.com
+  tls:
+    - hosts:
+        - mail.lother.io
+        - mail.konradlother.com
+      secretName: rainloop-tls
+
+
+persistence:
+  enabled: true
+  storageClass: rook-ceph
+  size: 10Gi
+
+nodeSelector:
+  lother.io/zone: core

@@ -1,0 +1,29 @@
+# Default values for gpsd.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+gpsd:
+  image:
+    pullPolicy: Always
+    tag: arm64v8
+  device: /dev/ttyACM0
+  args: -N -G -D3
+
+
+gpsd_exporter:
+  enabled: true
+  args: "-s kph"
+  image:
+    pullPolicy: Always
+    tag: arm64v8
+
+nodeSelector:
+  kubernetes.io/hostname: kbus.k8s.konradlother.com
+
+tolerations:
+  - key: "KBUS"
+    operator: "Equal"
+    value: "true"
+    effect: "NoExecute"
+
+affinity: {}

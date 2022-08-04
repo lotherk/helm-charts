@@ -3,45 +3,58 @@ entries:
   bind9:
   - apiVersion: v2
     appVersion: "9.16"
-    created: "2021-06-10T21:45:18.809665333+02:00"
+    created: "2022-08-04T22:49:58.979926121+01:00"
     description: A ISC Bind9 Helm chart for Kubernetes
-    digest: 2f32c5a1adf29748cfba2be65e809716956392935c346adc3f19f48528244aad
+    digest: 39c6eb72c806b5e7cda58263ecbeda4aec8fb4e533e4f3e04deff03e21aac503
     name: bind9
     type: application
     urls:
-    - https://github.com/lotherk/helm-charts/releases/download/bind9-0.1.0/bind9-0.1.0.tgz
+    - https://lotherk.github.io/helm-charts/bind9-0.1.0.tgz
     version: 0.1.0
+  cert-manager-webhook-hetzner:
+  - apiVersion: v1
+    appVersion: 0.2.0
+    created: "2022-08-04T22:49:58.980505965+01:00"
+    description: A Helm chart for the Hetzner DNS webhook for cert-manager
+    digest: 37f3abd9d16b09bd276d7afe8d86b613f58d7022b539ee993440a5cd5f606158
+    maintainers:
+    - name: mecodia GmbH
+      url: https://github.com/mecodia/cert-manager-webhook-hetzner
+    name: cert-manager-webhook-hetzner
+    urls:
+    - https://lotherk.github.io/helm-charts/cert-manager-webhook-hetzner-0.2.0.tgz
+    version: 0.2.0
   fiche:
   - apiVersion: v2
     appVersion: 0.9.1
-    created: "2021-06-10T21:45:18.950377642+02:00"
+    created: "2022-08-04T22:49:58.981524863+01:00"
     description: A Fiche Helm chart for Kubernetes
-    digest: 49f3672369443f6861a15d23b2eb413b78e35ceff2ed1d1c634bf247ebc6e5e9
+    digest: 68cb0f68eb486eb400f5a7816b6b102f7397954db2265d2cb943b0499aabcde7
     name: fiche
     type: application
     urls:
-    - https://github.com/lotherk/helm-charts/releases/download/fiche-0.1.0/fiche-0.1.0.tgz
+    - https://lotherk.github.io/helm-charts/fiche-0.1.0.tgz
     version: 0.1.0
   gpsd:
   - apiVersion: v2
     appVersion: 0.9.1
-    created: "2021-06-10T21:45:19.111606962+02:00"
+    created: "2022-08-04T22:49:58.983621823+01:00"
     description: A Fiche Helm chart for Kubernetes
-    digest: 511f34cada7fead406ed3a60e8cc1d18a62ffeb10724d38ad4247f24dd093e86
+    digest: 5deb0b5cb846304514f5369992eb8c97846de9c27c3162bc32c6ae8a64a306f1
     name: gpsd
     type: application
     urls:
-    - https://github.com/lotherk/helm-charts/releases/download/gpsd-0.1.0/gpsd-0.1.0.tgz
+    - https://lotherk.github.io/helm-charts/gpsd-0.1.0.tgz
     version: 0.1.0
   rainloop:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2021-06-10T21:45:19.316255006+02:00"
+    created: "2022-08-04T22:49:58.984180126+01:00"
     description: A Rainloop Helm chart for Kubernetes
-    digest: ebf1a9b8e1cf94905644253224708c5d89de7aa6fd912be1068a236760e0ee3d
+    digest: e3b1242d2858d4bcc6d125e1f8b267fc803d52fd4fd21561b727dbf93837c3f1
     name: rainloop
     type: application
     urls:
-    - https://github.com/lotherk/helm-charts/releases/download/rainloop-0.1.0/rainloop-0.1.0.tgz
+    - https://lotherk.github.io/helm-charts/rainloop-0.1.0.tgz
     version: 0.1.0
-generated: "2021-06-10T21:45:19.316275119+02:00"
+generated: "2022-08-04T22:49:58.978714916+01:00"

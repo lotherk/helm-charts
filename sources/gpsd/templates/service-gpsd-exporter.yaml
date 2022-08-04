@@ -1,0 +1,44 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "gpsd.fullname" . }}-metric
+  labels:
+    {{- include "gpsd.labels" . | nindent 4 }}
+    app.kubernetes.io/component: gpsd-exporter
+  annotations:
+    {{- toYaml .Values.gpsd_exporter.service.annotations | nindent 4 }}
+spec:
+  type: {{ .Values.gpsd_exporter.service.type }}
+  {{- if eq .Values.gpsd_exporter.service.type "LoadBalancer" }}
+  {{- if .Values.gpsd_exporter.service.loadBalancerIP }}
+  loadBalancerIP: {{ .Values.gpsd_exporter.service.loadBalancerIP }}
+  {{- end -}}
+  {{- if .Values.gpsd_exporter.service.loadBalancerSourceRanges }}
+  loadBalancerSourceRanges:
+  {{- range .Values.gpsd_exporter.service.loadBalancerSourceRanges }}
+    - {{ . }}
+  {{- end }}
+  {{- end }}
+  {{- end }}
+  {{- if and .Values.gpsd_exporter.service.clusterIP (eq .Values.gpsd_exporter.service.type "ClusterIP") }}
+  clusterIP: {{ .Values.gpsd_exporter.service.clusterIP }}
+  {{- end }}
+  {{- if .Values.gpsd_exporter.service.externalIPs }}
+  externalIPs:
+    {{- toYaml .Values.gpsd_exporter.service.externalIPs | nindent 4 }}
+  {{- end }}
+  {{- if .Values.gpsd_exporter.service.externalTrafficPolicy }}
+  externalTrafficPolicy: {{ .Values.gpsd_exporter.service.externalTrafficPolicy }}
+  {{- end }}
+  ports:
+  - name: {{ include "gpsd.fullname" . }}-metric
+    port: {{ .Values.gpsd_exporter.service.port }}
+    targetPort: 9999
+    protocol: TCP
+    {{- if .Values.gpsd_exporter.service.nodePort }}
+    nodePort: {{ .Values.gpsd_exporter.service.nodePort }}
+    {{- end }}
+
+  selector:
+    {{- include "gpsd.selectorLabels" . | nindent 4 }}
+    app.kubernetes.io/component: gpsd-exporter

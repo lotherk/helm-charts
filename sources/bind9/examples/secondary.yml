@@ -1,0 +1,62 @@
+useHostNetwork: true
+
+service:
+  type: NodePort
+  externalIPs:
+    - 116.203.138.52
+
+tolerations:
+  - key: "GatewayOnly"
+    operator: "Equal"
+    value: "true"
+    effect: "NoExecute"
+
+nodeSelector:
+  kubernetes.io/hostname: nbg01.k8s.konradlother.com
+
+persistence:
+  enabled: enabled
+  persistence:
+  enabled: enabled
+  storageClass: local-path
+  size: 1Gi
+
+extraVolumes:
+  - name: sshkey
+    secret:
+      secretName: bind9-ssh-key
+      defaultMode: 256
+
+extraVolumeMounts:
+  - name: sshkey
+    mountPath: /sshkey
+
+extraInitContainers:
+  - name: git-cloner
+    image: lotherk/toolbox
+    env:
+      - name: GIT_CLONE_URL
+        value: git@github.com:lotherk/bind9-secondary
+      - name: GIT_SSH_COMMAND
+        value: ssh -i /root/.ssh/id_rsa -o IdentitiesOnly=yes -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null
+    command:
+      - bash
+      - "-c"
+      - |
+        set -ex
+        mkdir -p /root/.ssh
+        cp /sshkey/id_rsa /root/.ssh/id_rsa
+        chmod 0400 /root/.ssh/id_rsa
+
+        if [ ! -d "/mnt/.git" ]; then
+                rm -rf /mnt/*
+                git clone $GIT_CLONE_URL /mnt/
+        fi
+
+    volumeMounts:
+      - name: data
+        mountPath: /mnt
+      - name: sshkey
+        mountPath: /sshkey
+
+

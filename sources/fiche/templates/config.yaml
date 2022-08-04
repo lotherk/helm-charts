@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: {{ include "fiche.fullname" . }}-nginx-conf
+  labels:
+    {{- include "fiche.labels" . | nindent 4 }}
+type: Opaque
+stringData:
+  nginx.conf: |-
+    server {
+        listen 80;
+        server_name {{ .Values.fiche.domain }};
+        charset utf-8;
+
+        location / {
+            root /usr/share/nginx/html/;
+            index index.txt index.html;
+        }
+    }

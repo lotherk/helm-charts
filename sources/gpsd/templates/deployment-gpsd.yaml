@@ -1,0 +1,77 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "gpsd.fullname" . }}
+  labels:
+    {{- include "gpsd.labels" . | nindent 4 }}
+    app.kubernetes.io/component: gpsd
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "gpsd.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: gpsd
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "gpsd.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: gpsd
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "gpsd.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      initContainers:
+        {{- if .Values.extraInitContainers }}
+          {{ toYaml .Values.extraInitContainers | nindent 8 }}
+        {{- end }}
+      containers:
+        - name: {{ .Chart.Name }}-gpsd
+          securityContext:
+            {{- toYaml .Values.gpsd.securityContext | nindent 12 }}
+          image: "{{ .Values.gpsd.image.repository }}:{{ .Values.gpsd.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.gpsd.image.pullPolicy }}
+          env:
+            - name: GPSD_DEVICE
+              value: "{{ .Values.gpsd.device }}"
+            - name: GPSD_ARGS
+              value: {{ .Values.gpsd.args | default "" | quote }}
+          ports:
+            - name: {{ include "gpsd.fullname" . }}-tcp
+              containerPort: 2947
+              protocol: TCP
+          volumeMounts:
+            - name: gps
+              mountPath: {{ .Values.gpsd.device }}
+          livenessProbe:
+            tcpSocket:
+              port: "{{ include "gpsd.fullname" . }}-tcp"
+          readinessProbe:
+            tcpSocket:
+              port: "{{ include "gpsd.fullname" . }}-tcp"
+          resources:
+            {{- toYaml .Values.gpsd.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      volumes:
+        - name: gps
+          hostPath:
+            path: {{ .Values.gpsd.device }}
+

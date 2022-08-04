@@ -1,0 +1,30 @@
+fiche:
+  image:
+    pullPolicy: Always
+  domain: hiddenbox.org
+  https: true
+
+ingress:
+  enabled: true
+  annotations:
+    kubernetes.io/ingress.class: "fr01"
+    nginx.ingress.kubernetes.io/proxy-body-size: '0'
+    nginx.ingress.kubernetes.io/proxy-read-timeout: '600'
+    nginx.ingress.kubernetes.io/proxy-send-timeout: '600'
+    certmanager.k8s.io/cluster-issuer: "letsencrypt-cluster-issuer"
+    kubernetes.io/tls-acme: "true"
+    certmanager.k8s.io/acme-challenge-type: "http01"
+    #cert-manager.io/cluster-issuer: "ca-issuer"
+  hosts:
+    - hiddenbox.org
+  tls:
+    - hosts:
+        - hiddenbox.org
+      secretName: hiddenbox-org-tls
+
+persistence:
+  enabled: true
+  size: 10G
+  storageClass: longhorn-ssd-core
+
+

@@ -1,0 +1,42 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "fiche.fullname" . }}-http
+  labels:
+    {{- include "fiche.labels" . | nindent 4 }}
+  annotations:
+    {{- toYaml .Values.nginx.service.annotations | nindent 4 }}
+spec:
+  type: {{ .Values.nginx.service.type }}
+  {{- if eq .Values.nginx.service.type "LoadBalancer" }}
+  {{- if .Values.nginx.service.loadBalancerIP }}
+  loadBalancerIP: {{ .Values.nginx.service.loadBalancerIP }}
+  {{- end -}}
+  {{- if .Values.nginx.service.loadBalancerSourceRanges }}
+  loadBalancerSourceRanges:
+  {{- range .Values.nginx.service.loadBalancerSourceRanges }}
+    - {{ . }}
+  {{- end }}
+  {{- end }}
+  {{- end }}
+  {{- if and .Values.nginx.service.clusterIP (eq .Values.nginx.service.type "ClusterIP") }}
+  clusterIP: {{ .Values.nginx.service.clusterIP }}
+  {{- end }}
+  {{- if .Values.nginx.service.externalIPs }}
+  externalIPs:
+    {{- toYaml .Values.nginx.service.externalIPs | nindent 4 }}
+  {{- end }}
+  {{- if .Values.nginx.service.externalTrafficPolicy }}
+  externalTrafficPolicy: {{ .Values.nginx.service.externalTrafficPolicy }}
+  {{- end }}
+  ports:
+  - name: {{ include "fiche.fullname" . }}-http
+    port: {{ .Values.nginx.service.port }}
+    targetPort: 80
+    protocol: TCP
+    {{- if .Values.nginx.service.nodePort }}
+    nodePort: {{ .Values.nginx.service.nodePort }}
+    {{- end }}
+
+  selector:
+    {{- include "fiche.selectorLabels" . | nindent 4 }}
